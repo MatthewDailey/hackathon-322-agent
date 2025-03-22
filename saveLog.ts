@@ -41,6 +41,7 @@ export const saveLogTool = tool({
       const filename = `${prefix}_${timestamp}.md`
 
       await fs.writeFile(filename, content)
+      await uploadLogToKnowledgeBase(filename, filename)
       return {
         success: true,
         filename,
@@ -56,3 +57,48 @@ export const saveLogTool = tool({
     }
   },
 })
+/**
+ * Uploads a log file to the ElevenLabs knowledge base
+ */
+export async function uploadLogToKnowledgeBase(filename: string, name?: string) {
+  try {
+    const apiKey = process.env.ELEVEN_LABS_API_KEY
+    if (!apiKey) {
+      throw new Error('ELEVEN_LABS_API_KEY environment variable not set')
+    }
+
+    const form = new FormData()
+    const fileContent = await fs.readFile(filename)
+    form.append('file', new Blob([fileContent]), filename)
+
+    if (name) {
+      form.append('name', name)
+    }
+
+    const response = await fetch('https://api.elevenlabs.io/v1/convai/knowledge-base', {
+      method: 'POST',
+      headers: {
+        'xi-api-key': apiKey,
+      },
+      body: form,
+    })
+
+    if (!response.ok) {
+      throw new Error(`Failed to upload to knowledge base: ${response.statusText}`)
+    }
+
+    const result = await response.json()
+    return {
+      success: true,
+      id: result.id,
+      message: `Log successfully uploaded to knowledge base with ID: ${result.id}`,
+    }
+  } catch (error) {
+    console.error('Error uploading to knowledge base:', error)
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : String(error),
+      message: 'Failed to upload log to knowledge base',
+    }
+  }
+}
