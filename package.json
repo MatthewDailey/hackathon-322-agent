@@ -1,0 +1,23 @@
+{
+  "name": "computer-use-starter",
+  "version": "1.0.0",
+  "description": "A starter project for building computer-use agents with Node.",
+  "scripts": {
+    "start": "tsx index.ts",
+    "format": "prettier --write ."
+  },
+  "author": "Matthew Dailey",
+  "license": "MIT",
+  "dependencies": {
+    "@ai-sdk/anthropic": "^1.1.17",
+    "ai": "^4.1.61",
+    "screenshot-desktop": "^1.15.1",
+    "sharp": "^0.33.5",
+    "tsx": "^4.19.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "@types/screenshot-desktop": "^1.12.3",
+    "prettier": "^3.5.3"
+  }
+}
