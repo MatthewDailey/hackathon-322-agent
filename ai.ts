@@ -8,6 +8,7 @@ import { getComputerTool } from './computer'
 import { sayTool } from './say'
 import { shellTool } from './shell'
 import { fetchWebServiceTool } from './fetchWebService'
+import { chartTool } from './chartTool'
 import { printBox } from './print'
 
 export async function doAi(prompt: string) {
@@ -20,6 +21,7 @@ export async function doAi(prompt: string) {
       bash: shellTool,
       say: sayTool,
       fetchWebService: fetchWebServiceTool,
+      chart: chartTool,
     },
     onStepFinish: (result) => {
       stepCount++
