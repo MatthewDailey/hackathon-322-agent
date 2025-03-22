@@ -13,7 +13,7 @@ import { printBox } from './print'
  */
 export function prettyPrintToolResponse(toolCall: any, result: any) {
   if (result.success) {
-    printBox(`Save Log Result`, `Content saved to file: ${result.filename}\n${result.message}`)
+    printBox(`Save Log Result`, result.filename)
   } else {
     printBox(`Save Log Error`, `Failed to save log: ${result.message}\n${result.error || ''}`)
   }

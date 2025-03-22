@@ -19,10 +19,7 @@ Chart.register(...registerables)
  */
 export function prettyPrintToolResponse(toolCall: any, result: any) {
   if (result.success) {
-    printBox(
-      `Chart Tool Result`,
-      `Chart created with title: "${toolCall.title || 'Time Series Chart'}"\nSaved to: ${result.path}`,
-    )
+    printBox(`Saved Chart`, result.path)
   } else {
     printBox(`Chart Tool Error`, `Failed to create chart: ${result.message}`)
   }

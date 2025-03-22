@@ -13,19 +13,15 @@ const execPromise = promisify(exec)
  * Pretty prints the response from the shell tool
  */
 export function prettyPrintToolResponse(toolCall: any, result: string) {
+  printBox(`Run command`, toolCall.command)
   printBox(
-    `Shell Command Result`,
-    `Command: ${toolCall.command}\n\nOutput:\n${result.slice(0, 500)}${
-      result.length > 500 ? '...(truncated)' : ''
-    }`,
+    `Command Result`,
+    `${result.slice(0, 500)}${result.length > 500 ? '...(truncated)' : ''}`,
   )
 }
 
 export const shellTool = anthropic.tools.bash_20250124({
   execute: async (toolParams: any) => {
-    console.log('========= Run command ==========')
-    console.log(toolParams.command)
-    console.log('=============================================')
     // Wait for user approval before executing command unless it's a curl
     // if (!toolParams.command.startsWith('curl')) {
     //   process.stdout.write('Type "approved" to execute this command: ')

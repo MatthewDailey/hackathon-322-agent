@@ -23,17 +23,17 @@ export function prettyPrintToolResponse(toolCall: any, result: any) {
   if (typeof result === 'string') {
     responseText = `Error: ${result}`
   } else {
-    responseText = `Request took ${result.durationMs}ms\n`
+    responseText = `Request took ${result.durationMs}ms\n\n`
     if (result.data) {
-      responseText += `Data: ${JSON.stringify(result.data, null, 2).slice(0, 300)}`
+      responseText += `${JSON.stringify(result.data, null, 2).slice(0, 300)}`
       if (JSON.stringify(result.data).length > 300) responseText += '...(truncated)'
     } else if (result.text) {
-      responseText += `Text: ${result.text.slice(0, 300)}`
+      responseText += `${result.text.slice(0, 300)}`
       if (result.text.length > 300) responseText += '...(truncated)'
     }
   }
 
-  printBox(`Fetch Web Service Result`, `URL: ${url.toString()}\n\n${responseText}`)
+  printBox(`Fetch Web Service Result`, `URL: ${url.toString()}\n${responseText}`)
 }
 
 export const fetchWebServiceTool = tool({
@@ -58,7 +58,6 @@ export const fetchWebServiceTool = tool({
       })
 
       // Make the request
-      console.log('Fetching', url.toString())
       const response = await fetch(url.toString())
 
       if (!response.ok) {
