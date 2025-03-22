@@ -143,6 +143,7 @@ export const chartTool = tool({
         success: true,
         message: `Chart saved to ${resolvedPath}`,
         path: resolvedPath,
+        base64Image: buffer.toString('base64'),
       }
     } catch (error) {
       return {
