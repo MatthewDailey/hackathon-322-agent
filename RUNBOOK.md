@@ -5,7 +5,7 @@ This is the oncall runbook used to assess the heath of our systems.
 ## KPIs
 
 - API success rate - The API should always succeed and return 200 status codes
-- API latency - The API should always return quickly. We aim for less 1s latency 99% of the time.
+- API latency - The API should always return quickly. We aim for P99 latency under 10s.
 
 ## Important pages and endpoints
 
@@ -31,7 +31,7 @@ First! Don't panic, we have this runbook to guide you. If you notice something i
 - Check that home page loads and the health check and search APIs respond quicky. 
 - Expected results:
  -- /api/ping -> pong
- -- /api/search -> this result can be anything and should not be verified, just check the latency is <1 sec.
+ -- /api/search -> this result can be anything and should not be verified, just check the latency is <10 sec.
 
 3. Check for recent deploys to Render and recent feature flag changes with LaunchDarkly. In general, an issue will start when new code is running. 
 
