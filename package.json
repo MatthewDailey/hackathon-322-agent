@@ -5,11 +5,13 @@
   "scripts": {
     "start": "tsx index.ts prompt",
     "oncall": "tsx index.ts oncall",
+    "debreif": "vite",
     "format": "prettier --write ."
   },
   "author": "Matthew Dailey",
   "license": "MIT",
   "dependencies": {
+    "@11labs/client": "^0.0.8",
     "@ai-sdk/anthropic": "^1.1.17",
     "@google/generative-ai": "^0.24.0",
     "@types/yargs": "^17.0.33",
@@ -20,6 +22,7 @@
     "screenshot-desktop": "^1.15.1",
     "sharp": "^0.33.5",
     "tsx": "^4.19.3",
+    "vite": "^6.2.2",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
