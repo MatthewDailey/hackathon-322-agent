@@ -59,8 +59,9 @@ ${request}
 # Runbook
 ${runbookContent}
 
-# Current time
-${new Date().toISOString()}
+Current time = ${new Date().toISOString()}
+Environment variables you know are set: RENDER_API_KEY, LAUNCHDARKLY_API_KEY
+
 Use the tools available to handle this oncall request according to the runbook. 
 First understand what needs to be checked, then methodically work through the steps.
 `
