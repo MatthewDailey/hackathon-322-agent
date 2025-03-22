@@ -26,8 +26,16 @@ async function main() {
         }
       },
     )
-    .command('oncall', 'TODO: Implement oncall functionality', () => {
-      console.log('oncall command not yet implemented')
+    .command('oncall', 'Start oncall response process', (yargs) => {
+      return yargs.option('runbook', {
+        alias: 'r',
+        describe: 'Path to the runbook file',
+        type: 'string',
+        demandOption: true
+      })
+    }, async (argv) => {
+      console.log(`Starting oncall process with runbook: ${argv.runbook}`)
+      // TODO: Implement actual oncall functionality
     })
     .demandCommand(1, 'Please provide a valid command')
     .help().argv
