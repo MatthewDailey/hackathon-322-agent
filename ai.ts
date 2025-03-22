@@ -16,9 +16,9 @@ import {
 } from './fetchWebService'
 import { chartTool, prettyPrintToolResponse as prettyPrintChartToolResponse } from './chartTool'
 import { saveLogTool, prettyPrintToolResponse as prettyPrintSaveLogToolResponse } from './saveLog'
-import { 
-  checkGraphForAnomaliesTool, 
-  prettyPrintToolResponse as prettyPrintCheckGraphForAnomaliesToolResponse 
+import {
+  checkGraphForAnomaliesTool,
+  prettyPrintToolResponse as prettyPrintCheckGraphForAnomaliesToolResponse,
 } from './checkGraphForAnomalies'
 import { printBox } from './print'
 
@@ -40,6 +40,9 @@ export async function doAi(prompt: string) {
     },
     onStepFinish: async (result) => {
       stepCount++
+      if (result.text.trim().length > 0) {
+        console.log('\x1b[32m%s\x1b[0m', result.text)
+      }
       if (result.toolCalls && result.toolCalls.length > 0) {
         // Process each tool call with its specific pretty print function
         for (const toolCall of result.toolCalls) {
@@ -85,8 +88,6 @@ export async function doAi(prompt: string) {
           }
         }
       }
-
-      console.log('\x1b[32m%s\x1b[0m', result.text)
     },
     maxSteps: 20,
   })

@@ -22,6 +22,7 @@ export function prettyPrintToolResponse(toolCall: any, result: any) {
     printBox(`Saved Chart`, result.path)
   } else {
     printBox(`Chart Tool Error`, `Failed to create chart: ${result.message}`)
+    console.log(toolCall)
   }
 }
 
@@ -119,6 +120,8 @@ export const chartTool = tool({
                 display: true,
                 text: y_label,
               },
+              beginAtZero: true,
+              min: 0,
             },
           },
           plugins: {
