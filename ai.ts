@@ -16,6 +16,10 @@ import {
 } from './fetchWebService'
 import { chartTool, prettyPrintToolResponse as prettyPrintChartToolResponse } from './chartTool'
 import { saveLogTool, prettyPrintToolResponse as prettyPrintSaveLogToolResponse } from './saveLog'
+import { 
+  checkGraphForAnomaliesTool, 
+  prettyPrintToolResponse as prettyPrintCheckGraphForAnomaliesToolResponse 
+} from './checkGraphForAnomalies'
 import { printBox } from './print'
 
 export async function doAi(prompt: string) {
@@ -32,6 +36,7 @@ export async function doAi(prompt: string) {
       fetchWebService: fetchWebServiceTool,
       chart: chartTool,
       saveLog: saveLogTool,
+      checkGraphForAnomalies: checkGraphForAnomaliesTool,
     },
     onStepFinish: async (result) => {
       stepCount++
@@ -61,6 +66,9 @@ export async function doAi(prompt: string) {
                 break
               case 'saveLog':
                 prettyPrintSaveLogToolResponse(toolCallAny.args, toolResult as any)
+                break
+              case 'checkGraphForAnomalies':
+                prettyPrintCheckGraphForAnomaliesToolResponse(toolCallAny.args, toolResult as any)
                 break
               // Case for computer is commented out since the computer tool is not currently being used
               // case 'computer':
