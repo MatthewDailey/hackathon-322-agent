@@ -44,6 +44,8 @@ First! Don't panic, we have this runbook to guide you.
 
 - If you ever notice anything is wrong, don't hesitate to notify the rest of the team by saying something outloud before continuing your investigation.
 
+- Also notify the team by saying something whenever you make a change to rollback a deploy or flip a feature flag.
+
 - Save a log of what you checked, what results you found and what you determined from that. This log will be helpful for the retrospective and improving in the future. Ideally, this is a markdown file that includes all the relevant links and embeds important images (eg graphs).
 
 ## Render API
