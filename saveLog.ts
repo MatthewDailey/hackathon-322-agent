@@ -69,11 +69,18 @@ export async function uploadLogToKnowledgeBase(filename: string, name?: string) 
 
     const form = new FormData()
     const fileContent = await fs.readFile(filename)
-    form.append('file', new Blob([fileContent]), filename)
 
     if (name) {
       form.append('name', name)
+    } else {
+      form.append('name', '')
     }
+
+    // Add empty URL as per API format
+    form.append('url', '')
+
+    // Add file with proper format
+    form.append('file', new Blob([fileContent], { type: 'text/plain' }), filename)
 
     const response = await fetch('https://api.elevenlabs.io/v1/convai/knowledge-base', {
       method: 'POST',
@@ -84,7 +91,10 @@ export async function uploadLogToKnowledgeBase(filename: string, name?: string) 
     })
 
     if (!response.ok) {
-      throw new Error(`Failed to upload to knowledge base: ${response.statusText}`)
+      const errorText = await response.text()
+      throw new Error(
+        `Failed to upload to knowledge base: ${response.status} ${response.statusText} - ${errorText}`,
+      )
     }
 
     const result = await response.json()
