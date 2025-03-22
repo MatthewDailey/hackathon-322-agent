@@ -25,9 +25,13 @@ Render
 
 First! Don't panic, we have this runbook to guide you. If you notice something is wrong, the first thing to do is check all of our core services to understand the scope of the issue. 
 
-1. Check that home page loads and the health check and search APIs respond quicky.
+1. Gather historical data from Render metrics to determine the scope of the issue and start time.
 
-2. If there is any issue, gather historical data from Render metrics to determine the scope of the issue and start time.
+2. If you notice an issue, try to reproduce it yourself. 
+- Check that home page loads and the health check and search APIs respond quicky. 
+- Expected results:
+ -- /api/ping -> pong
+ -- /api/search -> this result can be anything and should not be verified, just check the latency is <1 sec.
 
 3. Check for recent deploys to Render and recent feature flag changes with LaunchDarkly. In general, an issue will start when new code is running. 
 
@@ -54,7 +58,7 @@ curl --request GET \
 
 ```bash
 curl --request GET \
-     --url 'https://api.render.com/v1/metrics/http-requests?resolutionSeconds=30&aggregateBy=statusCode&path=<api_path>&resource=<service-id>&quantile=0.99' \
+     --url 'https://api.render.com/v1/metrics/http-requests?resolutionSeconds=30&aggregateBy=statusCode&path=<api_path>&resource=<service-id>' \
      --header "accept: application/json" \
      --header "authorization: Bearer $RENDER_API_KEY"
 ```

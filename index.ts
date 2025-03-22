@@ -35,7 +35,7 @@ async function main() {
             alias: 'r',
             describe: 'Path to the runbook file',
             type: 'string',
-            demandOption: true,
+            default: 'RUNBOOK.md',
           })
           .option('request', {
             alias: 'q',

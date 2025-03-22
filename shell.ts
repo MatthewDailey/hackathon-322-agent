@@ -10,7 +10,7 @@ const execPromise = promisify(exec)
 
 export const shellTool = anthropic.tools.bash_20250124({
   execute: async (toolParams: any) => {
-    console.log('========= Requesting to run command ==========')
+    console.log('========= Run command ==========')
     console.log(toolParams.command)
     console.log('=============================================')
     // Wait for user approval before executing command unless it's a curl

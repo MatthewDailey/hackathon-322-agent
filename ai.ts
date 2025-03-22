@@ -3,7 +3,7 @@
  */
 
 import { anthropic } from '@ai-sdk/anthropic'
-import { generateText } from 'ai'
+import { generateText, ToolCall } from 'ai'
 import { getComputerTool } from './computer'
 import { sayTool } from './say'
 import { shellTool } from './shell'
@@ -13,7 +13,7 @@ import { printBox } from './print'
 export async function doAi(prompt: string) {
   let stepCount = 0
   const { text } = await generateText({
-    model: anthropic('claude-3-7-sonnet-20250219'),
+    model: anthropic('claude-3-5-sonnet-latest'),
     prompt: prompt,
     tools: {
       // computer: await getComputerTool(),
@@ -31,7 +31,7 @@ export async function doAi(prompt: string) {
             result.toolCalls.map((toolCall) => ({
               name: toolCall.toolName,
               args: toolCall.args,
-              result: result.toolResults.find((r) => r.toolCallId === toolCall.toolCallId)?.result,
+              result: getResultStringForToolCall(toolCall, result),
             })),
             null,
             2,
@@ -43,4 +43,12 @@ export async function doAi(prompt: string) {
   })
 
   return { text }
+}
+
+function getResultStringForToolCall(toolCall: ToolCall<string, any>, result: any) {
+  const r = result.toolResults.find((r) => r.toolCallId === toolCall.toolCallId)?.result
+  if (typeof r === 'string') {
+    return r.slice(0, 100)
+  }
+  return JSON.stringify(r, null, 2).slice(0, 100)
 }
