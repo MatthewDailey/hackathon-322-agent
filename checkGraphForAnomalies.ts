@@ -16,6 +16,7 @@ export function prettyPrintToolResponse(toolCall: any, result: any) {
     `Analysis of ${toolCall.imagePath}\n\n${result.slice(0, 500)}${
       result.length > 500 ? '...(truncated)' : ''
     }`,
+    'yellow',
   )
 }
 
