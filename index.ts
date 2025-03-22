@@ -1,3 +1,7 @@
+/**
+ * @fileoverview This file defines the main entry point for the application, parsing command-line arguments using `yargs` and executing the `doAi` function with a given prompt. It supports the 'prompt' command and a placeholder 'oncall' command.
+ */
+
 import { doAi } from './ai'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'

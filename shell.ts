@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Provides the `shellTool` which allows the agent to execute bash commands using `child_process.exec`. It uses `@ai-sdk/anthropic` to define the tool and prompts for user approval before execution.
+ */
+
 import { anthropic } from '@ai-sdk/anthropic'
 import { exec } from 'child_process'
 import { promisify } from 'util'

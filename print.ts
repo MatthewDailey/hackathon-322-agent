@@ -1,3 +1,7 @@
+/**
+ * @fileoverview This file defines the `printBox` function, which formats and prints a title and text within a box of equals signs to the console. It aims to create visually distinct output for improved readability.
+ */
+
 export function printBox(title: string, text: string) {
   const targetLength = 40
   const minPadding = 4

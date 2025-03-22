@@ -1,3 +1,7 @@
+/**
+ * @fileoverview This file defines the `Computer` namespace, which provides functions to automate computer actions like mouse movements, clicks, typing, and screenshots using the `cliclick` command-line tool. It includes functions like `executeComputerAction`, `takeScreenshot`, and helper functions for key mapping and error handling. The `getComputerTool` function returns an AI tool definition for interacting with the computer.
+ */
+
 import { anthropic } from '@ai-sdk/anthropic'
 import { exec } from 'child_process'
 import screenshot from 'screenshot-desktop'

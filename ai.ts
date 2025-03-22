@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Provides the `doAi` function, which uses the AI SDK to generate text based on a prompt and a set of tools (computer, bash, say). It leverages `generateText` and the `anthropic` model to orchestrate the AI interaction, including tool calls and step-by-step output.
+ */
+
 import { anthropic } from '@ai-sdk/anthropic'
 import { generateText } from 'ai'
 import { getComputerTool } from './computer'

@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Provides the `sayTool` tool, which uses the macOS `say` command to speak text. It defines the tool's description, input parameters (using Zod), and execution logic. The `sayTool` function takes text as input and returns a success or error message.
+ */
+
 import { tool } from 'ai'
 import { z } from 'zod'
 import { exec } from 'child_process'
