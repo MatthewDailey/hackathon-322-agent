@@ -3,21 +3,24 @@
   "version": "1.0.0",
   "description": "A starter project for building computer-use agents with Node.",
   "scripts": {
-    "start": "tsx index.ts",
+    "start": "tsx index.ts prompt",
     "format": "prettier --write ."
   },
   "author": "Matthew Dailey",
   "license": "MIT",
   "dependencies": {
     "@ai-sdk/anthropic": "^1.1.17",
+    "@types/yargs": "^17.0.33",
     "ai": "^4.1.61",
     "screenshot-desktop": "^1.15.1",
     "sharp": "^0.33.5",
-    "tsx": "^4.19.3"
+    "tsx": "^4.19.3",
+    "yargs": "^17.7.2"
   },
   "devDependencies": {
     "@types/node": "^22.13.10",
     "@types/screenshot-desktop": "^1.12.3",
+    "@types/yargs": "^17.0.32",
     "prettier": "^3.5.3"
   }
 }
