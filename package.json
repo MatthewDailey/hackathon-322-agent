@@ -12,6 +12,7 @@
     "@ai-sdk/anthropic": "^1.1.17",
     "@types/yargs": "^17.0.33",
     "ai": "^4.1.61",
+    "node-fetch": "^3.3.2",
     "screenshot-desktop": "^1.15.1",
     "sharp": "^0.33.5",
     "tsx": "^4.19.3",

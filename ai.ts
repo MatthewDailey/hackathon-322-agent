@@ -7,6 +7,7 @@ import { generateText } from 'ai'
 import { getComputerTool } from './computer'
 import { sayTool } from './say'
 import { shellTool } from './shell'
+import { fetchWebServiceTool } from './fetchWebService'
 import { printBox } from './print'
 
 export async function doAi(prompt: string) {
@@ -15,9 +16,10 @@ export async function doAi(prompt: string) {
     model: anthropic('claude-3-7-sonnet-20250219'),
     prompt: prompt,
     tools: {
-      computer: await getComputerTool(),
-      bash: shellTool,
-      say: sayTool,
+      // computer: await getComputerTool(),
+      // bash: shellTool,
+      // say: sayTool,
+      fetchWebService: fetchWebServiceTool,
     },
     onStepFinish: (result) => {
       stepCount++
@@ -29,6 +31,7 @@ export async function doAi(prompt: string) {
             result.toolCalls.map((toolCall) => ({
               name: toolCall.toolName,
               args: toolCall.args,
+              result: result.toolResults.find((r) => r.toolCallId === toolCall.toolCallId)?.result,
             })),
             null,
             2,
