@@ -16,6 +16,7 @@ import {
 } from './fetchWebService'
 import { chartTool, prettyPrintToolResponse as prettyPrintChartToolResponse } from './chartTool'
 import { saveLogTool, prettyPrintToolResponse as prettyPrintSaveLogToolResponse } from './saveLog'
+import { waitTool, prettyPrintToolResponse as prettyPrintWaitToolResponse } from './wait'
 import {
   checkGraphForAnomaliesTool,
   prettyPrintToolResponse as prettyPrintCheckGraphForAnomaliesToolResponse,
@@ -36,6 +37,7 @@ export async function doAi(prompt: string) {
       fetchWebService: fetchWebServiceTool,
       chart: chartTool,
       saveLog: saveLogTool,
+      wait: waitTool,
       checkGraphForAnomalies: checkGraphForAnomaliesTool,
     },
     onStepFinish: async (result) => {
@@ -69,6 +71,9 @@ export async function doAi(prompt: string) {
                 break
               case 'saveLog':
                 prettyPrintSaveLogToolResponse(toolCallAny.args, toolResult as any)
+                break
+              case 'wait':
+                prettyPrintWaitToolResponse(toolCallAny.args, toolResult as any)
                 break
               case 'checkGraphForAnomalies':
                 prettyPrintCheckGraphForAnomaliesToolResponse(toolCallAny.args, toolResult as any)
