@@ -14,10 +14,12 @@ const execPromise = promisify(exec)
  */
 export function prettyPrintToolResponse(toolCall: any, result: string) {
   printBox(`Run command`, toolCall.command)
-  printBox(
-    `Command Result`,
-    `${result.slice(0, 500)}${result.length > 500 ? '...(truncated)' : ''}`,
-  )
+  if (result.trim().length > 0) {
+    printBox(
+      `Command Result`,
+      `${result.slice(0, 500)}${result.length > 500 ? '...(truncated)' : ''}`.trim(),
+    )
+  }
 }
 
 export const shellTool = anthropic.tools.bash_20250124({

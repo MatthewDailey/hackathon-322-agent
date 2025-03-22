@@ -15,12 +15,13 @@ export function prettyPrintToolResponse(toolCall: any, result: any) {
     `Graph Analysis Result`,
     `Analysis of ${toolCall.imagePath}\n\n${result.slice(0, 500)}${
       result.length > 500 ? '...(truncated)' : ''
-    }`
+    }`,
   )
 }
 
 export const checkGraphForAnomaliesTool = tool({
-  description: 'Analyzes a graph image to identify anomalies, unusual patterns, or outliers',
+  description:
+    'Analyzes a graph image to identify anomalies, unusual patterns, or outliers. Use in combination with the chartTool to generate charts and analyze them for anomalies.',
   parameters: z.object({
     imagePath: z
       .string()

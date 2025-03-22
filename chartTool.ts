@@ -39,7 +39,8 @@ const backgroundPlugin = {
 }
 
 export const chartTool = tool({
-  description: 'Generates and saves a line graph from time series data',
+  description:
+    'Generates and saves a line graph from time series data. You should ALWAYS use this to generate charts and never write custom scripts. Use in combination with the checkGraphForAnomaliesTool to analyze the graph for anomalies.',
   parameters: z.object({
     x_data: z
       .array(z.union([z.string(), z.number(), z.date()]))
