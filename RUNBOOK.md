@@ -42,7 +42,7 @@ First! Don't panic, we have this runbook to guide you. If you notice something i
 
 ## Important notes
 
-- If you ever notice anything is wrong, don't hesitate to notify the rest of the team before continuing your investigation.
+- If you ever notice anything is wrong, don't hesitate to notify the rest of the team by saying something outloud before continuing your investigation.
 
 - Save a log of what you checked, what results you found and what you determined from that. This log will be helpful for the retrospective and improving in the future.
 
