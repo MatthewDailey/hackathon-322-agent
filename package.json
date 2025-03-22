@@ -5,7 +5,7 @@
   "scripts": {
     "start": "tsx index.ts prompt",
     "oncall": "tsx index.ts oncall",
-    "debreif": "vite",
+    "retro": "vite & open http://localhost:5173",
     "format": "prettier --write ."
   },
   "author": "Matthew Dailey",
