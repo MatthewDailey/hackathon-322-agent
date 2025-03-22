@@ -31,7 +31,9 @@ First! Don't panic, we have this runbook to guide you. If you notice something i
 
 3. Check for recent deploys to Render and recent feature flag changes with LaunchDarkly. In general, an issue will start when new code is running. 
 
-4. If it's clear that a flag flip or deploy caused the issue, notify the team and go ahead turning off the flag or rolling back the deploy.
+4. If it's clear that a flag flip or deploy caused the issue, notify the team and go ahead turning off the flag or rolling back the deploy. 
+
+5. Make sure to verify the change.
 
 
 ## Important notes
@@ -39,3 +41,63 @@ First! Don't panic, we have this runbook to guide you. If you notice something i
 - If you ever notice anything is wrong, don't hesitate to notify the rest of the team before continuing your investigation.
 
 - Save a log of what you checked, what results you found and what you determined from that. This log will be helpful for the retrospective and improving in the future.
+
+## Render API
+
+Sample curl to get latency time series data
+```bash
+curl --request GET \
+     --url 'https://api.render.com/v1/metrics/http-latency?resolutionSeconds=30&path=<api_path>&resource=<service-id>&quantile=0.99' \
+     --header "accept: application/json" \
+     --header "authorization: Bearer $RENDER_API_KEY"
+```
+
+```bash
+curl --request GET \
+     --url 'https://api.render.com/v1/metrics/http-requests?resolutionSeconds=30&aggregateBy=statusCode&path=<api_path>&resource=<service-id>&quantile=0.99' \
+     --header "accept: application/json" \
+     --header "authorization: Bearer $RENDER_API_KEY"
+```
+
+To get recent deploys
+```bash
+curl --request GET \
+     --url 'https://api.render.com/v1/services/<service-id>/deploys?limit=20' \
+     --header 'accept: application/json' \
+     --header "authorization: Bearer $RENDER_API_KEY"
+```
+
+To roll back a deploy
+
+```bash
+curl --request POST \
+     --url https://api.render.com/v1/services/<service_id>/rollback \
+     --header 'accept: application/json' \
+     --header 'content-type: application/json' \
+     --header "authorization: Bearer $RENDER_API_KEY \
+     --data '
+{
+  "deployId": "<deploy_id>"
+}
+'
+```
+
+## LaunchDarkly API
+
+Audit log of recent changes
+```bash
+curl https://app.launchdarkly.com/api/v2/auditlog \
+     -H "Authorization: $LAUNCHDARKLY_API_KEY"
+```
+
+Turn off a feature flag
+```bash
+curl -X PATCH \
+  https://app.launchdarkly.com/api/v2/flags/default/<flag-name> \
+  -H "Authorization: $LAUNCHDARKLY_API_KEY" \
+  -H "Content-Type: application/json; domain-model=launchdarkly.semanticpatch" \
+  -d '{
+        "environmentKey": "test",
+        "instructions": [ { "kind": "turnFlagOff" } ]
+      }'
+```
