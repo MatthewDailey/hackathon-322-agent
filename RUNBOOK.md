@@ -23,7 +23,7 @@ Render
 
 ## How to check the system health
 
-First! Don't panic, we have this runbook to guide you. If you notice something is wrong, the first thing to do is check all of our core services to understand the scope of the issue. 
+First! Don't panic, we have this runbook to guide you.
 
 1. Gather historical data from Render metrics to determine the scope of the issue and start time. Make sure to save relevant graphs.
 

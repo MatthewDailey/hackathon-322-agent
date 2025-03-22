@@ -7,8 +7,27 @@ import { exec } from 'child_process'
 import screenshot from 'screenshot-desktop'
 import sharp from 'sharp'
 import { promisify } from 'util'
+import { printBox } from './print'
 
 const execPromise = promisify(exec)
+
+/**
+ * Pretty prints the response from the computer tool
+ */
+export function prettyPrintToolResponse(toolCall: any, result: any) {
+  if (toolCall.action === 'screenshot') {
+    printBox(`Computer Tool - Screenshot`, `Took a screenshot (image data not shown)`)
+  } else {
+    printBox(
+      `Computer Tool - ${toolCall.action}`,
+      `${typeof result === 'string' ? result.slice(0, 500) : JSON.stringify(result, null, 2).slice(0, 500)}${
+        (typeof result === 'string' ? result.length : JSON.stringify(result).length) > 500
+          ? '...(truncated)'
+          : ''
+      }`,
+    )
+  }
+}
 
 export const getComputerTool = async () => {
   const displayDimensions = await Computer.getDisplayDimensions()

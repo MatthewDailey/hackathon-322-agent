@@ -6,6 +6,35 @@
 import { tool } from 'ai'
 import { z } from 'zod'
 import fetch from 'node-fetch'
+import { printBox } from './print'
+
+/**
+ * Pretty prints the response from the fetchWebService tool
+ */
+export function prettyPrintToolResponse(toolCall: any, result: any) {
+  const url = new URL(`https://hackathon-322-web.onrender.com${toolCall.path}`)
+  if (toolCall.queryParams) {
+    Object.entries(toolCall.queryParams).forEach(([key, value]) => {
+      url.searchParams.append(key, value as string)
+    })
+  }
+
+  let responseText = ''
+  if (typeof result === 'string') {
+    responseText = `Error: ${result}`
+  } else {
+    responseText = `Request took ${result.durationMs}ms\n`
+    if (result.data) {
+      responseText += `Data: ${JSON.stringify(result.data, null, 2).slice(0, 300)}`
+      if (JSON.stringify(result.data).length > 300) responseText += '...(truncated)'
+    } else if (result.text) {
+      responseText += `Text: ${result.text.slice(0, 300)}`
+      if (result.text.length > 300) responseText += '...(truncated)'
+    }
+  }
+
+  printBox(`Fetch Web Service Result`, `URL: ${url.toString()}\n\n${responseText}`)
+}
 
 export const fetchWebServiceTool = tool({
   description:

@@ -6,8 +6,16 @@ import { tool } from 'ai'
 import { z } from 'zod'
 import { exec } from 'child_process'
 import { promisify } from 'util'
+import { printBox } from './print'
 
 const execPromise = promisify(exec)
+
+/**
+ * Pretty prints the response from the say tool
+ */
+export function prettyPrintToolResponse(toolCall: any, result: string) {
+  printBox(`Say Tool Result`, `Spoke: "${toolCall.text}"\nResult: ${result}`)
+}
 
 export const sayTool = tool({
   description: 'Speaks the provided text using the macOS say command',

@@ -6,9 +6,22 @@
 import { tool } from 'ai'
 import fs from 'fs/promises'
 import { z } from 'zod'
+import { printBox } from './print'
+
+/**
+ * Pretty prints the response from the saveLog tool
+ */
+export function prettyPrintToolResponse(toolCall: any, result: any) {
+  if (result.success) {
+    printBox(`Save Log Result`, `Content saved to file: ${result.filename}\n${result.message}`)
+  } else {
+    printBox(`Save Log Error`, `Failed to save log: ${result.message}\n${result.error || ''}`)
+  }
+}
 
 export const saveLogTool = tool({
-  description: 'Saves content to a log file with a timestamp in the filename.',
+  description:
+    'Saves content to a log file with a timestamp in the filename. This should only be used to save a final log after all tasks have been completed.',
   parameters: z.object({
     content: z.string().describe('The content to save to the log file. This should be markdown.'),
     prefix: z

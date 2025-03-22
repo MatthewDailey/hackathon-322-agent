@@ -4,12 +4,18 @@
 
 import { anthropic } from '@ai-sdk/anthropic'
 import { generateText, ToolCall } from 'ai'
-import { getComputerTool } from './computer'
-import { sayTool } from './say'
-import { shellTool } from './shell'
-import { fetchWebServiceTool } from './fetchWebService'
-import { chartTool } from './chartTool'
-import { saveLogTool } from './saveLog'
+import {
+  getComputerTool,
+  prettyPrintToolResponse as prettyPrintComputerToolResponse,
+} from './computer'
+import { sayTool, prettyPrintToolResponse as prettyPrintSayToolResponse } from './say'
+import { shellTool, prettyPrintToolResponse as prettyPrintShellToolResponse } from './shell'
+import {
+  fetchWebServiceTool,
+  prettyPrintToolResponse as prettyPrintFetchWebServiceToolResponse,
+} from './fetchWebService'
+import { chartTool, prettyPrintToolResponse as prettyPrintChartToolResponse } from './chartTool'
+import { saveLogTool, prettyPrintToolResponse as prettyPrintSaveLogToolResponse } from './saveLog'
 import { printBox } from './print'
 
 // Track token usage over time
@@ -60,18 +66,46 @@ export async function doAi(prompt: string) {
       )
 
       if (result.toolCalls && result.toolCalls.length > 0) {
-        printBox(
-          `Tool calls (step=${stepCount})`,
-          JSON.stringify(
-            result.toolCalls.map((toolCall) => ({
-              name: toolCall.toolName,
-              args: toolCall.args,
-              result: getResultStringForToolCall(toolCall, result),
-            })),
-            null,
-            2,
-          ),
-        )
+        // Process each tool call with its specific pretty print function
+        for (const toolCall of result.toolCalls) {
+          const toolResult = result.toolResults.find(
+            (r) => r.toolCallId === toolCall.toolCallId,
+          )?.result
+
+          if (toolResult !== undefined) {
+            // Cast toolCall to any to fix type issues
+            const toolCallAny = toolCall as any
+
+            switch (toolCallAny.toolName) {
+              case 'bash':
+                prettyPrintShellToolResponse(toolCallAny.args, toolResult as string)
+                break
+              case 'say':
+                prettyPrintSayToolResponse(toolCallAny.args, toolResult as string)
+                break
+              case 'fetchWebService':
+                prettyPrintFetchWebServiceToolResponse(toolCallAny.args, toolResult as any)
+                break
+              case 'chart':
+                prettyPrintChartToolResponse(toolCallAny.args, toolResult as any)
+                break
+              case 'saveLog':
+                prettyPrintSaveLogToolResponse(toolCallAny.args, toolResult as any)
+                break
+              // Case for computer is commented out since the computer tool is not currently being used
+              // case 'computer':
+              //   prettyPrintComputerToolResponse(toolCallAny.args, toolResult as any)
+              //   break
+              default:
+                // Fallback for any tool without a custom pretty print function
+                printBox(
+                  `${toolCallAny.toolName} Result`,
+                  JSON.stringify(toolResult, null, 2).slice(0, 500) +
+                    (JSON.stringify(toolResult).length > 500 ? '...(truncated)' : ''),
+                )
+            }
+          }
+        }
       }
 
       // If we're approaching the rate limit, pause execution temporarily

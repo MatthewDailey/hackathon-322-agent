@@ -5,8 +5,21 @@
 import { anthropic } from '@ai-sdk/anthropic'
 import { exec } from 'child_process'
 import { promisify } from 'util'
+import { printBox } from './print'
 
 const execPromise = promisify(exec)
+
+/**
+ * Pretty prints the response from the shell tool
+ */
+export function prettyPrintToolResponse(toolCall: any, result: string) {
+  printBox(
+    `Shell Command Result`,
+    `Command: ${toolCall.command}\n\nOutput:\n${result.slice(0, 500)}${
+      result.length > 500 ? '...(truncated)' : ''
+    }`,
+  )
+}
 
 export const shellTool = anthropic.tools.bash_20250124({
   execute: async (toolParams: any) => {

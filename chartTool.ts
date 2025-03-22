@@ -9,9 +9,24 @@ import { createCanvas } from 'canvas'
 import { Chart, ChartConfiguration, registerables } from 'chart.js'
 import fs from 'fs'
 import path from 'path'
+import { printBox } from './print'
 
 // Register all Chart.js components
 Chart.register(...registerables)
+
+/**
+ * Pretty prints the response from the chart tool
+ */
+export function prettyPrintToolResponse(toolCall: any, result: any) {
+  if (result.success) {
+    printBox(
+      `Chart Tool Result`,
+      `Chart created with title: "${toolCall.title || 'Time Series Chart'}"\nSaved to: ${result.path}`,
+    )
+  } else {
+    printBox(`Chart Tool Error`, `Failed to create chart: ${result.message}`)
+  }
+}
 
 // Create a custom background plugin based on Chart.js documentation
 const backgroundPlugin = {
