@@ -8,9 +8,9 @@ import { readFileSync } from 'fs'
  */
 export async function examineGraphForAnomalies(imagePath: string) {
   // Check for API key
-  const apiKey = process.env.GOOGLE_API_KEY
+  const apiKey = process.env.GEMINI_API_KEY
   if (!apiKey) {
-    throw new Error('GOOGLE_API_KEY environment variable is not set')
+    throw new Error('GEMINI_API_KEY environment variable is not set')
   }
 
   try {
