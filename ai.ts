@@ -9,6 +9,7 @@ import { sayTool } from './say'
 import { shellTool } from './shell'
 import { fetchWebServiceTool } from './fetchWebService'
 import { chartTool } from './chartTool'
+import { saveLogTool } from './saveLog'
 import { printBox } from './print'
 
 // Track token usage over time
@@ -38,6 +39,7 @@ export async function doAi(prompt: string) {
       say: sayTool,
       fetchWebService: fetchWebServiceTool,
       chart: chartTool,
+      saveLog: saveLogTool,
     },
     onStepFinish: async (result) => {
       stepCount++
