@@ -18,7 +18,7 @@ export async function doAi(prompt: string) {
     tools: {
       // computer: await getComputerTool(),
       bash: shellTool,
-      // say: sayTool,
+      say: sayTool,
       fetchWebService: fetchWebServiceTool,
     },
     onStepFinish: (result) => {
