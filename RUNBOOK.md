@@ -26,7 +26,7 @@ Render
 First! Don't panic, we have this runbook to guide you.
 
 1. Gather historical data from Render metrics to determine the scope of the issue and start time. Make sure to save relevant graphs. 
-- Always look at graphs first! Your one-off test might not be accurate and aggregate data is more reliable.
+- You should ALWAYS look at graphs of the data! Your one-off test might not be accurate and aggregate data is more reliable.
 
 2. If you notice an issue, try to reproduce it yourself. 
 - Check that home page loads and the health check and search APIs respond quicky. 
