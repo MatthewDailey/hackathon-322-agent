@@ -14,7 +14,7 @@ export function printBox(title: string, text: string, color?: string) {
   const resetCode = color ? '\x1b[0m' : ''
 
   console.log(`${colorCode}${topBottom}${resetCode}`)
-  console.log(`${colorCode}${text}${resetCode}`)
+  console.log(`${colorCode}${typeof text === 'string' ? text : JSON.stringify(text)}${resetCode}`)
   console.log(`${colorCode}${'='.repeat(topBottom.length)}${resetCode}`)
 }
 

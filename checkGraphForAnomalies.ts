@@ -11,13 +11,7 @@ import { printBox } from './print'
  * Pretty prints the response from the graph analysis tool
  */
 export function prettyPrintToolResponse(toolCall: any, result: any) {
-  printBox(
-    `Graph Analysis Result`,
-    `Analysis of ${toolCall.imagePath}\n\n${result.slice(0, 500)}${
-      result.length > 500 ? '...(truncated)' : ''
-    }`,
-    'yellow',
-  )
+  printBox(`Analysis of ${toolCall.imagePath}`, result, 'yellow')
 }
 
 export const checkGraphForAnomaliesTool = tool({

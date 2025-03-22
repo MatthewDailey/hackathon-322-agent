@@ -16,7 +16,7 @@ const execPromise = promisify(exec)
  * Pretty prints the response from the say tool
  */
 export function prettyPrintToolResponse(toolCall: any, result: string) {
-  console.log(`Spoke: "${toolCall.text}"`)
+  printBox(`Spoke`, toolCall.text)
 }
 
 export const sayTool = tool({

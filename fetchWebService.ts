@@ -23,7 +23,7 @@ export function prettyPrintToolResponse(toolCall: any, result: any) {
   if (typeof result === 'string') {
     responseText = `Error: ${result}`
   } else {
-    responseText = `Request took ${result.durationMs}ms\n\n`
+    responseText = `Request took ${result.durationMs}ms\n`
     if (result.data) {
       responseText += `${JSON.stringify(result.data, null, 2).slice(0, 300)}`
       if (JSON.stringify(result.data).length > 300) responseText += '...(truncated)'
@@ -33,7 +33,7 @@ export function prettyPrintToolResponse(toolCall: any, result: any) {
     }
   }
 
-  printBox(`Fetch Web Service Result`, `URL: ${url.toString()}\n${responseText}`)
+  printBox(`Service Request`, `URL: ${url.toString()}\n${responseText}`)
 }
 
 export const fetchWebServiceTool = tool({

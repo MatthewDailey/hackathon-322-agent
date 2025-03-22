@@ -9,6 +9,7 @@ import { createCanvas } from 'canvas'
 import { Chart, ChartConfiguration, registerables } from 'chart.js'
 import fs from 'fs'
 import path from 'path'
+import { exec } from 'child_process'
 import { printBox } from './print'
 
 // Register all Chart.js components
@@ -154,6 +155,8 @@ export const chartTool = tool({
       const resolvedPath = path.resolve(output_path)
       const buffer = canvas.toBuffer('image/png')
       fs.writeFileSync(resolvedPath, buffer)
+
+      exec(`open ${resolvedPath}`)
 
       return {
         success: true,
