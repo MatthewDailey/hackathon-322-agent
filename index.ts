@@ -26,17 +26,51 @@ async function main() {
         }
       },
     )
-    .command('oncall', 'Start oncall response process', (yargs) => {
-      return yargs.option('runbook', {
-        alias: 'r',
-        describe: 'Path to the runbook file',
-        type: 'string',
-        demandOption: true
-      })
-    }, async (argv) => {
-      console.log(`Starting oncall process with runbook: ${argv.runbook}`)
-      // TODO: Implement actual oncall functionality
-    })
+    .command(
+      'oncall',
+      'Start oncall response process',
+      (yargs) => {
+        return yargs
+          .option('runbook', {
+            alias: 'r',
+            describe: 'Path to the runbook file',
+            type: 'string',
+            demandOption: true,
+          })
+          .option('request', {
+            alias: 'q',
+            describe: 'Specific oncall request',
+            type: 'string',
+          })
+      },
+      async (argv) => {
+        try {
+          const fs = require('fs')
+          const runbookContent = fs.readFileSync(argv.runbook, 'utf8')
+
+          const defaultRequest =
+            'You are the oncall engineer. You need to check over the health of the system and fix any issues.'
+          const request = argv.request || defaultRequest
+
+          const prompt = `
+# Oncall Request
+${request}
+
+# Runbook
+${runbookContent}
+
+# Current time
+${new Date().toISOString()}
+Use the tools available to handle this oncall request according to the runbook. 
+First understand what needs to be checked, then methodically work through the steps.
+`
+
+          await doAi(prompt)
+        } catch (error) {
+          console.error('Error in oncall process:', error)
+        }
+      },
+    )
     .demandCommand(1, 'Please provide a valid command')
     .help().argv
 

@@ -4,6 +4,7 @@
   "description": "A starter project for building computer-use agents with Node.",
   "scripts": {
     "start": "tsx index.ts prompt",
+    "oncall": "tsx index.ts oncall",
     "format": "prettier --write ."
   },
   "author": "Matthew Dailey",
