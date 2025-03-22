@@ -20,16 +20,17 @@ export function prettyPrintToolResponse(toolCall: any, result: string) {
 }
 
 export const sayTool = tool({
-  description: 'Speaks the provided text using the macOS say command',
+  description: 'Speaks the provided text outloud',
   parameters: z.object({
     text: z.string().describe('The text to be spoken'),
   }),
   execute: async ({ text }) => {
-    const command = `say "${text.replace(/"/g, '\\"')}"`
-    const { stdout, stderr } = await execPromise(command)
-    if (stderr) {
-      return `Error: ${stderr}`
-    }
+    // const command = `say "${text.replace(/"/g, '\\"')}"`
+    // const { stdout, stderr } = await execPromise(command)
+    // if (stderr) {
+    //   return `Error: ${stderr}`
+    // }
+    await sayWithRime(text)
     return `Successfully spoke: "${text}"`
   },
 })
