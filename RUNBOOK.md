@@ -36,9 +36,9 @@ First! Don't panic, we have this runbook to guide you.
 
 3. Check for recent deploys to Render and recent feature flag changes with LaunchDarkly. In general, an issue will start when new code is running. 
 
-4. If it's clear that a flag flip or deploy caused the issue, notify the team and go ahead turning off the flag or rolling back the deploy. 
+4. If it's clear that a flag flip or deploy caused the issue, notify the team and go ahead turning off the flag or rolling back the deploy. You should do one of these at a time, only do a second if you wait a few minutes to verify and it has not fixed the issue.
 
-5. Make sure to verify the change.
+5. Make sure to wait a minute or two for the change to take effect and verify the change.
 
 
 ## Important notes

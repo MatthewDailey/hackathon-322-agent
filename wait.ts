@@ -22,12 +22,12 @@ export const waitTool = tool({
       .number()
       .positive()
       .describe(
-        'The duration to wait in seconds. Maximum allowed value is 120 seconds (2 minutes).',
+        'The duration to wait in seconds. Maximum allowed value is 300 seconds (5 minutes).',
       ),
   }),
   execute: async ({ duration }) => {
     // Limit maximum wait time to 5 minutes (300 seconds)
-    const limitedDuration = Math.min(duration, 120)
+    const limitedDuration = Math.min(duration, 300)
 
     // If user tried to wait longer than the limit, note it in the result
     const wasLimited = duration > limitedDuration
