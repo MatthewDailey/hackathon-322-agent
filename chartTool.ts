@@ -13,6 +13,19 @@ import path from 'path'
 // Register all Chart.js components
 Chart.register(...registerables)
 
+// Create a custom background plugin based on Chart.js documentation
+const backgroundPlugin = {
+  id: 'customCanvasBackgroundColor',
+  beforeDraw: (chart, args, options) => {
+    const { ctx } = chart
+    ctx.save()
+    ctx.globalCompositeOperation = 'destination-over'
+    ctx.fillStyle = options.color || 'white'
+    ctx.fillRect(0, 0, chart.width, chart.height)
+    ctx.restore()
+  },
+}
+
 export const chartTool = tool({
   description: 'Generates and saves a line graph from time series data',
   parameters: z.object({
@@ -31,6 +44,10 @@ export const chartTool = tool({
       .string()
       .optional()
       .describe('The color of the line (CSS color string, defaults to blue)'),
+    background_color: z
+      .string()
+      .optional()
+      .describe('The background color of the chart (CSS color string, defaults to white)'),
   }),
   execute: async ({
     x_data,
@@ -40,6 +57,7 @@ export const chartTool = tool({
     title = 'Time Series Chart',
     output_path = 'chart.png',
     line_color = 'rgb(75, 192, 192)',
+    background_color = 'white',
   }) => {
     try {
       // Validate input data
@@ -76,7 +94,6 @@ export const chartTool = tool({
         },
         options: {
           responsive: false,
-          backgroundColor: 'white',
           scales: {
             x: {
               title: {
@@ -103,13 +120,16 @@ export const chartTool = tool({
               display: true,
               position: 'top',
             },
+            // Using a type assertion to avoid TypeScript error
+            // for the custom plugin option
+            // @ts-ignore
+            customCanvasBackgroundColor: {
+              color: background_color,
+            },
           },
         },
+        plugins: [backgroundPlugin],
       }
-
-      // Create a white background before drawing the chart
-      ctx.fillStyle = 'white'
-      ctx.fillRect(0, 0, width, height)
 
       // Create the chart on the canvas
       new Chart(ctx as any, chartConfig)
